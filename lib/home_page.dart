@@ -1,5 +1,3 @@
-import 'dart:math';
-import 'dart:ui';
 import 'package:christmas/components/countdown.dart';
 import 'package:christmas/components/jokes.dart';
 import 'package:christmas/components/snowfall.dart';
@@ -17,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageStateView extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final double mobileBreakpoint = 600;
+    const double mobileBreakpoint = 600;
     final screenWidth = MediaQuery.of(context).size.width;
 
     return MaterialApp(
@@ -41,7 +39,7 @@ class _HomePageStateView extends State<HomePage> {
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white),
                           ),
-                          Expanded(child: CountdownTimer()),
+                          const Expanded(child: CountdownTimer()),
                           const SizedBox(height: 10),
                           Expanded(
                               child: Container(

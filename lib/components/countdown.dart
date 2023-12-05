@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class CountdownTimer extends StatefulWidget {
+  const CountdownTimer({super.key});
+
   @override
   _CountdownTimerState createState() => _CountdownTimerState();
 }
@@ -57,7 +58,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
 
     return Container(
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 250, 250, 250),
+        color: const Color.fromARGB(255, 250, 250, 250),
         borderRadius: BorderRadius.circular(15),
       ),
       padding: const EdgeInsets.all(16.0),

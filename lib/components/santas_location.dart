@@ -68,7 +68,7 @@ class SantaTracker {
         );
       }
     } else if (currentUtcTime.isAfter(santaFinish)) {
-      return ("North Pole", "Santa is resting ready for next year.");
+      return ("North Pole", "Santa is resting after a busy Christmas");
     }
 
     // Calculate total time Santa has for delivering gifts in seconds

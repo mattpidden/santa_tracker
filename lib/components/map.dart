@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:christmas/components/alert.dart';
 import 'package:christmas/components/santas_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart' as map;
@@ -26,7 +27,6 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
   var currentStop = SantaTracker().getLocationNames().$1;
   var nextStop = SantaTracker().getLocationNames().$2;
 
-  static const _santasGroto = LatLng(80.95, 5.71);
   bool trackingOn = false;
 
   final mapController = map.MapController();
@@ -140,26 +140,23 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
                 top: 0,
                 left: 0,
                 right: 0,
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    //mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Current Stop: $currentStop",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  //mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Current Stop: $currentStop",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          backgroundColor: Color.fromARGB(255, 247, 247, 247)),
+                    ),
+                    Text("Next Stop: $nextStop",
+                        style: const TextStyle(
+                            fontSize: 14,
                             backgroundColor:
-                                Color.fromARGB(255, 247, 247, 247)),
-                      ),
-                      Text("Next Stop: $nextStop",
-                          style: TextStyle(
-                              fontSize: 14,
-                              backgroundColor:
-                                  Color.fromARGB(255, 247, 247, 247)))
-                    ],
-                  ),
+                                Color.fromARGB(255, 247, 247, 247)))
+                  ],
                 ),
               ),
               Column(

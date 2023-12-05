@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Snowfall extends StatefulWidget {
+  const Snowfall({super.key});
+
   @override
   _SnowfallState createState() => _SnowfallState();
 }
@@ -20,7 +22,7 @@ class _SnowfallState extends State<Snowfall> {
   }
 
   void startSnowfall() {
-    Timer.periodic(Duration(milliseconds: 50), (timer) {
+    Timer.periodic(const Duration(milliseconds: 50), (timer) {
       for (var snowflake in snowflakes) {
         snowflake.fall();
       }
