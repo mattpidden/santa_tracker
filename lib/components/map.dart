@@ -121,11 +121,12 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
               map.FlutterMap(
                 mapController: mapController,
                 options: const map.MapOptions(
-                  initialCenter: LatLng(0.0, 0.0),
-                  initialZoom: 1.5,
-                  maxZoom: 10,
-                  minZoom: 1.5,
-                ),
+                    initialCenter: LatLng(0.0, 0.0),
+                    initialZoom: 1.5,
+                    maxZoom: 10,
+                    minZoom: 1.5,
+                    interactiveFlags: map.InteractiveFlag.pinchZoom |
+                        map.InteractiveFlag.drag),
                 children: [
                   map.TileLayer(
                     urlTemplate:

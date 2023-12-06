@@ -154,7 +154,7 @@ class SantaTracker {
           ),
         )
       ];
-      for (int i = 0; i <= countryCoordinates.length - 1; i++) {
+      for (int i = 0; i <= countryCoordinates.length - 1; i = i + 20) {
         LatLng location = countryCoordinates.values.toList()[i];
         allMarkers.add(
           map.Marker(
@@ -207,7 +207,18 @@ class SantaTracker {
         )
       ];
 
-      for (int i = 0; i <= stopIndex; i++) {
+      for (int i = stopIndex - 20; i <= stopIndex; i++) {
+        LatLng location = countryCoordinates.values.toList()[i];
+        allMarkers.add(
+          map.Marker(
+            width: 15,
+            height: 15,
+            point: location,
+            child: visitedWidget,
+          ),
+        );
+      }
+      for (int i = 0; i <= stopIndex - 20; i = i + 20) {
         LatLng location = countryCoordinates.values.toList()[i];
         allMarkers.add(
           map.Marker(

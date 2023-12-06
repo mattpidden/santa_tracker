@@ -15,7 +15,7 @@ class _SnowfallState extends State<Snowfall> {
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < 200; i++) {
+    for (int i = 0; i < 50; i++) {
       snowflakes.add(Snowflake.random());
     }
     startSnowfall();
