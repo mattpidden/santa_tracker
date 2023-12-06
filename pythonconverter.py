@@ -46,7 +46,7 @@ def filter_top_cities(city_objects, percentage, max_cities_per_country=100):
 
     return top_cities
 
-cities = filter_top_cities(cities, 0.2, 80)
+cities = filter_top_cities(cities, 0.35, 120)
 
 
 def sort_cities(cities):

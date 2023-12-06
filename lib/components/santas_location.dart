@@ -11,8 +11,8 @@ class SantaTracker {
   LatLng calculateSantaLocation() {
     DateTime currentUtcTime = DateTime.now().toUtc();
     // The start and finish times for santa deliver in UTC
-    DateTime santaStart = DateTime(currentUtcTime.year, 12, 5, 8, 0, 0);
-    DateTime santaFinish = DateTime(currentUtcTime.year, 12, 6, 8, 0, 0);
+    DateTime santaStart = DateTime(currentUtcTime.year, 12, 24, 12, 0, 0);
+    DateTime santaFinish = DateTime(currentUtcTime.year, 12, 25, 12, 0, 0);
 
     // Check if current time is within Santa's delivery window
     if (currentUtcTime.isBefore(santaStart) ||
@@ -42,8 +42,8 @@ class SantaTracker {
   (String, String) getLocationNames() {
     DateTime currentUtcTime = DateTime.now().toUtc();
     // The start and finish times for santa deliver in UTC
-    DateTime santaStart = DateTime(currentUtcTime.year, 12, 5, 8, 0, 0);
-    DateTime santaFinish = DateTime(currentUtcTime.year, 12, 6, 8, 0, 0);
+    DateTime santaStart = DateTime(currentUtcTime.year, 12, 24, 12, 0, 0);
+    DateTime santaFinish = DateTime(currentUtcTime.year, 12, 25, 12, 0, 0);
 
     if (currentUtcTime.isBefore(santaStart)) {
       Duration timeUntilSanta = santaStart.difference(currentUtcTime);
@@ -95,8 +95,8 @@ class SantaTracker {
     LatLng santaLocation;
     DateTime currentUtcTime = DateTime.now().toUtc();
     // The start and finish times for santa deliver in UTC
-    DateTime santaStart = DateTime(currentUtcTime.year, 12, 5, 8, 0, 0);
-    DateTime santaFinish = DateTime(currentUtcTime.year, 12, 6, 8, 0, 0);
+    DateTime santaStart = DateTime(currentUtcTime.year, 12, 24, 12, 0, 0);
+    DateTime santaFinish = DateTime(currentUtcTime.year, 12, 25, 12, 0, 0);
     // Assuming you have an assets/tree.json file for the Lottie animation
     final Widget visitedWidget = Lottie.asset('assets/present.json',
         width: 15, height: 15, fit: BoxFit.cover, animate: false);
@@ -154,7 +154,7 @@ class SantaTracker {
           ),
         )
       ];
-      for (int i = 0; i <= countryCoordinates.length - 1; i = i + 25) {
+      for (int i = 0; i <= countryCoordinates.length - 1; i = i + 40) {
         LatLng location = countryCoordinates.values.toList()[i];
         allMarkers.add(
           map.Marker(
@@ -218,7 +218,7 @@ class SantaTracker {
           ),
         );
       }
-      for (int i = 0; i <= stopIndex - 20; i = i + 20) {
+      for (int i = 0; i <= stopIndex - 20; i = i + 45) {
         LatLng location = countryCoordinates.values.toList()[i];
         allMarkers.add(
           map.Marker(
