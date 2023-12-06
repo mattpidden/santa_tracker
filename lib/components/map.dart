@@ -128,6 +128,7 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
                     backgroundColor: Colors.red,
                     interactiveFlags: map.InteractiveFlag.pinchZoom |
                         map.InteractiveFlag.drag),
+                  
                 children: [
                   map.TileLayer(
                     urlTemplate:

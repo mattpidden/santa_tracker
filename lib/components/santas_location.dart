@@ -5,20 +5,18 @@ import 'package:latlong2/latlong.dart';
 import 'package:lottie/lottie.dart';
 
 class SantaTracker {
+      DateTime currentUtcTime = DateTime.now().toUtc();
+
+  DateTime santaStart = DateTime(DateTime.now().toUtc().year, 12, 24, 12, 0, 0);
+    DateTime santaFinish = DateTime(DateTime.now().toUtc().year, 12, 25, 12, 0, 0);
   // List of coordinates for major countries
-  static const _santasGroto = LatLng(80.95, 5.71);
+  static const _santasGroto = LatLng(89.95, 5.71);
   // Calculate Santa's location based on the current time
   LatLng calculateSantaLocation() {
-    DateTime currentUtcTime = DateTime.now().toUtc();
-    // The start and finish times for santa deliver in UTC
-    DateTime santaStart = DateTime(currentUtcTime.year, 12, 24, 12, 0, 0);
-    DateTime santaFinish = DateTime(currentUtcTime.year, 12, 25, 12, 0, 0);
-
     // Check if current time is within Santa's delivery window
     if (currentUtcTime.isBefore(santaStart) ||
         currentUtcTime.isAfter(santaFinish)) {
-      return const LatLng(80.95,
-          5.71); // Santa is not delivering gifts right now - he is at his grotto
+      return _santasGroto; // Santa is not delivering gifts right now - he is at his grotto
     }
 
     // Calculate total time Santa has for delivering gifts in seconds
@@ -40,33 +38,15 @@ class SantaTracker {
   }
 
   (String, String) getLocationNames() {
-    DateTime currentUtcTime = DateTime.now().toUtc();
-    // The start and finish times for santa deliver in UTC
-    DateTime santaStart = DateTime(currentUtcTime.year, 12, 24, 12, 0, 0);
-    DateTime santaFinish = DateTime(currentUtcTime.year, 12, 25, 12, 0, 0);
 
     if (currentUtcTime.isBefore(santaStart)) {
       Duration timeUntilSanta = santaStart.difference(currentUtcTime);
 
-      if (timeUntilSanta.inDays > 1) {
-        // More than 1 day away
         return (
           "North Pole",
-          "Santa is leaving in ${timeUntilSanta.inDays} days"
+          "Santa leaves in ${timeUntilSanta.inDays}d ${timeUntilSanta.inHours - (timeUntilSanta.inDays * 24)}h ${timeUntilSanta.inMinutes - (timeUntilSanta.inHours * 60)}m"
         );
-      } else if (timeUntilSanta.inHours > 1) {
-        // Less than 1 day but more than 1 hour away
-        return (
-          "North Pole",
-          "Santa is leaving in ${timeUntilSanta.inHours} hours"
-        );
-      } else {
-        // Less than 1 hour away
-        return (
-          "North Pole",
-          "Santa is leaving in ${timeUntilSanta.inMinutes} minutes"
-        );
-      }
+      
     } else if (currentUtcTime.isAfter(santaFinish)) {
       return ("North Pole", "Santa is resting after a busy Christmas");
     }
@@ -93,10 +73,6 @@ class SantaTracker {
 
   List<map.Marker> getAllMarkers() {
     LatLng santaLocation;
-    DateTime currentUtcTime = DateTime.now().toUtc();
-    // The start and finish times for santa deliver in UTC
-    DateTime santaStart = DateTime(currentUtcTime.year, 12, 24, 12, 0, 0);
-    DateTime santaFinish = DateTime(currentUtcTime.year, 12, 25, 12, 0, 0);
     // Assuming you have an assets/tree.json file for the Lottie animation
     final Widget visitedWidget = Lottie.asset('assets/present.json',
         width: 15, height: 15, fit: BoxFit.cover, animate: false);
@@ -107,7 +83,7 @@ class SantaTracker {
         map.Marker(
           width: 100,
           height: 100,
-          point: const LatLng(80.95, 5.71),
+          point: _santasGroto,
           child: Lottie.asset(
             'assets/santasleigh.json',
             width: 100,
@@ -134,7 +110,7 @@ class SantaTracker {
         map.Marker(
           width: 100,
           height: 100,
-          point: const LatLng(80.95, 5.71),
+          point: _santasGroto,
           child: Lottie.asset(
             'assets/santasleigh.json',
             width: 100,
