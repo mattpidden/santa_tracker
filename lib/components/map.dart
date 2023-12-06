@@ -125,6 +125,7 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
                     initialZoom: 1.5,
                     maxZoom: 10,
                     minZoom: 1.5,
+                    backgroundColor: Colors.red,
                     interactiveFlags: map.InteractiveFlag.pinchZoom |
                         map.InteractiveFlag.drag),
                 children: [
