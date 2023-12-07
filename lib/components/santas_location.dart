@@ -5,12 +5,13 @@ import 'package:latlong2/latlong.dart';
 import 'package:lottie/lottie.dart';
 
 class SantaTracker {
-      DateTime currentUtcTime = DateTime.now().toUtc();
+  DateTime currentUtcTime = DateTime.now().toUtc();
 
   DateTime santaStart = DateTime(DateTime.now().toUtc().year, 12, 24, 12, 0, 0);
-    DateTime santaFinish = DateTime(DateTime.now().toUtc().year, 12, 25, 12, 0, 0);
+  DateTime santaFinish =
+      DateTime(DateTime.now().toUtc().year, 12, 25, 12, 0, 0);
   // List of coordinates for major countries
-  static const _santasGroto = LatLng(89.95, 5.71);
+  static const _santasGroto = LatLng(89.95, 2.71);
   // Calculate Santa's location based on the current time
   LatLng calculateSantaLocation() {
     // Check if current time is within Santa's delivery window
@@ -38,15 +39,13 @@ class SantaTracker {
   }
 
   (String, String) getLocationNames() {
-
     if (currentUtcTime.isBefore(santaStart)) {
       Duration timeUntilSanta = santaStart.difference(currentUtcTime);
 
-        return (
-          "North Pole",
-          "Santa leaves in ${timeUntilSanta.inDays}d ${timeUntilSanta.inHours - (timeUntilSanta.inDays * 24)}h ${timeUntilSanta.inMinutes - (timeUntilSanta.inHours * 60)}m"
-        );
-      
+      return (
+        "North Pole",
+        "Santa leaves in ${timeUntilSanta.inDays}d ${timeUntilSanta.inHours - (timeUntilSanta.inDays * 24)}h ${timeUntilSanta.inMinutes - (timeUntilSanta.inHours * 60)}m"
+      );
     } else if (currentUtcTime.isAfter(santaFinish)) {
       return ("North Pole", "Santa is resting after a busy Christmas");
     }
@@ -92,14 +91,23 @@ class SantaTracker {
           ),
         ),
         map.Marker(
-          width: 100,
-          height: 100,
+          width: 125,
+          height: 125,
           point: _santasGroto,
-          child: Lottie.asset(
-            'assets/tree.json',
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
+          child: Column(
+            children: [
+              Lottie.asset(
+                'assets/tree.json',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+              const Text(
+                "NORTH POLE",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              )
+            ],
           ),
         )
       ];
@@ -119,14 +127,23 @@ class SantaTracker {
           ),
         ),
         map.Marker(
-          width: 100,
-          height: 100,
+          width: 125,
+          height: 125,
           point: _santasGroto,
-          child: Lottie.asset(
-            'assets/tree.json',
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
+          child: Column(
+            children: [
+              Lottie.asset(
+                'assets/tree.json',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+              const Text(
+                "NORTH POLE",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              )
+            ],
           ),
         )
       ];
@@ -171,14 +188,23 @@ class SantaTracker {
           ),
         ),
         map.Marker(
-          width: 100,
-          height: 100,
+          width: 125,
+          height: 125,
           point: _santasGroto,
-          child: Lottie.asset(
-            'assets/tree.json',
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
+          child: Column(
+            children: [
+              Lottie.asset(
+                'assets/tree.json',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+              const Text(
+                "NORTH POLE",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              )
+            ],
           ),
         )
       ];

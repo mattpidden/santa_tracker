@@ -33,6 +33,10 @@ class _TrackSantaMapState extends State<TrackSantaMap> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(
+                      width: 50,
+                      height: 25,
+                    ),
                     Text(
                       "Live Santa Tracker",
                       style: TextStyle(
@@ -41,7 +45,7 @@ class _TrackSantaMapState extends State<TrackSantaMap> {
                           fontSize: 24),
                     ),
                     SizedBox(
-                      width: 25,
+                      width: 50,
                       height: 25,
                       child: MaterialButton(
                         onPressed: () {
@@ -58,9 +62,13 @@ Wishing you and your family a festive season filled with joy and wonder! 🎅�
 Merry Christmas! 🎄🎉
 """);
                         },
-                        child: Icon(
-                          Icons.info_outline,
-                          color: Colors.white,
+                        child: SizedBox(
+                          width: 25,
+                          height: 25,
+                          child: Icon(
+                            Icons.info_outline,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
