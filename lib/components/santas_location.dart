@@ -11,7 +11,7 @@ class SantaTracker {
   DateTime santaFinish =
       DateTime(DateTime.now().toUtc().year, 12, 25, 12, 0, 0);
   // List of coordinates for major countries
-  static const _santasGroto = LatLng(89.95, 2.71);
+  static const _santasGroto = LatLng(83.95, 5);
   // Calculate Santa's location based on the current time
   LatLng calculateSantaLocation() {
     // Check if current time is within Santa's delivery window
@@ -38,16 +38,21 @@ class SantaTracker {
     return santaLocation;
   }
 
-  (String, String) getLocationNames() {
+  (String, String, int) getLocationNames() {
     if (currentUtcTime.isBefore(santaStart)) {
       Duration timeUntilSanta = santaStart.difference(currentUtcTime);
 
       return (
         "North Pole",
-        "Santa leaves in ${timeUntilSanta.inDays}d ${timeUntilSanta.inHours - (timeUntilSanta.inDays * 24)}h ${timeUntilSanta.inMinutes - (timeUntilSanta.inHours * 60)}m"
+        "Santa leaves in ${timeUntilSanta.inDays}d ${timeUntilSanta.inHours - (timeUntilSanta.inDays * 24)}h ${timeUntilSanta.inMinutes - (timeUntilSanta.inHours * 60)}m",
+        0
       );
     } else if (currentUtcTime.isAfter(santaFinish)) {
-      return ("North Pole", "Santa is resting after a busy Christmas");
+      return (
+        "North Pole",
+        "Santa is resting after a busy Christmas",
+        countryCoordinates.length
+      );
     }
 
     // Calculate total time Santa has for delivering gifts in seconds
@@ -67,7 +72,7 @@ class SantaTracker {
     if (stopIndex < countryCoordinates.length) {
       nextStopName = countryCoordinates.keys.toList()[stopIndex + 1];
     }
-    return (currentStopName, nextStopName);
+    return (currentStopName, nextStopName, stopIndex);
   }
 
   List<map.Marker> getAllMarkers() {

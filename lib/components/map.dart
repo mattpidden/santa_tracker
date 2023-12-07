@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:christmas/components/alert.dart';
 import 'package:christmas/components/santas_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart' as map;
 import 'package:latlong2/latlong.dart';
 import 'package:lottie/lottie.dart';
+import 'package:geocoding/geocoding.dart' as geocoding;
 
 class AnimatedMapControllerPage extends StatefulWidget {
   static const String route = '/map_controller_animated';
@@ -24,9 +24,10 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
 
   var _santa = SantaTracker().calculateSantaLocation();
   var _markers = SantaTracker().getAllMarkers();
+  List<map.Marker> tappedMarker = [];
   var currentStop = SantaTracker().getLocationNames().$1;
   var nextStop = SantaTracker().getLocationNames().$2;
-
+  var presentsDelivered = SantaTracker().getLocationNames().$3;
   bool trackingOn = false;
 
   final mapController = map.MapController();
@@ -95,6 +96,8 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
         _markers = SantaTracker().getAllMarkers();
         currentStop = SantaTracker().getLocationNames().$1;
         nextStop = SantaTracker().getLocationNames().$2;
+        presentsDelivered = SantaTracker().getLocationNames().$3;
+
         if (trackingOn) {
           mapController.move(_santa, mapController.camera.zoom);
         }
@@ -120,12 +123,42 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
             child: Stack(children: [
               map.FlutterMap(
                 mapController: mapController,
-                options: const map.MapOptions(
-                    initialCenter: LatLng(0.0, 0.0),
-                    initialZoom: 1.5,
+                options: map.MapOptions(
+                    initialCenter: _santa,
+                    initialZoom: 2,
                     maxZoom: 10,
-                    minZoom: 1,
+                    minZoom: 2,
                     backgroundColor: Color.fromARGB(255, 172, 212, 220),
+                    onTap: (tapPos, position) async {
+                      // Reverse geocoding
+                      List<geocoding.Placemark> placemarks =
+                          await geocoding.placemarkFromCoordinates(
+                        position.latitude,
+                        position.longitude,
+                      );
+
+                      String locationInfo = "Unknown Location";
+
+                      if (placemarks.isNotEmpty) {
+                        locationInfo =
+                            "${placemarks.first.country}, ${placemarks.first.locality}";
+                      }
+
+                      // Clear previous markers
+                      tappedMarker.clear();
+
+                      // Add a new marker with location info
+                      tappedMarker.add(map.Marker(
+                        point: position,
+                        child: Container(
+                          color: Colors.white,
+                          child: Text(locationInfo),
+                        ),
+                      ));
+
+                      // Update the UI
+                      setState(() {});
+                    },
                     interactiveFlags: map.InteractiveFlag.pinchZoom |
                         map.InteractiveFlag.drag),
                 children: [
@@ -135,7 +168,7 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
                     userAgentPackageName: 'dev.fleaflet.flutter_map.example',
                     tileUpdateTransformer: _animatedMoveTileUpdateTransformer,
                   ),
-                  map.MarkerLayer(markers: _markers),
+                  map.MarkerLayer(markers: _markers + tappedMarker),
                 ],
               ),
               Positioned(
@@ -157,7 +190,12 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
                         style: const TextStyle(
                             fontSize: 14,
                             backgroundColor:
-                                Color.fromARGB(255, 247, 247, 247)))
+                                Color.fromARGB(255, 247, 247, 247))),
+                    Text("Presents Delivered: ${presentsDelivered * 1420357}",
+                        style: const TextStyle(
+                            fontSize: 14,
+                            backgroundColor:
+                                Color.fromARGB(255, 247, 247, 247))),
                   ],
                 ),
               ),
@@ -220,7 +258,7 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
                     height: 55,
                     child: TextButton(
                       onPressed: () {
-                        _animatedMapMove(const LatLng(0.0, 0.0), 1.5);
+                        _animatedMapMove(const LatLng(30, 0.0), 2);
                         setState(() {
                           trackingOn = false;
                         });
