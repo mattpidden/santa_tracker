@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 
 class CountdownTimer extends StatefulWidget {
-  const CountdownTimer({super.key});
+  final VoidCallback callback;
+
+  const CountdownTimer({super.key, required this.callback});
 
   @override
   _CountdownTimerState createState() => _CountdownTimerState();
@@ -57,16 +60,10 @@ class _CountdownTimerState extends State<CountdownTimer> {
         (minutes * 60);
 
     return Container(
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 250, 250, 250),
-        borderRadius: BorderRadius.circular(15),
-      ),
       padding: const EdgeInsets.all(16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Countdown to Christmas:', style: TextStyle(fontSize: 20)),
-          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -76,6 +73,23 @@ class _CountdownTimerState extends State<CountdownTimer> {
               _buildTimeUnit(seconds, 'Seconds'),
             ],
           ),
+          SizedBox(
+            height: 100,
+          ),
+          MaterialButton(
+              onPressed: () {
+                widget.callback();
+              },
+              child: Container(
+                padding: EdgeInsets.all(15),
+                color: Colors.white,
+                child: Text(
+                  "VIEW MAP",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromARGB(255, 172, 212, 220)),
+                ),
+              ))
         ],
       ),
     );
@@ -85,8 +99,9 @@ class _CountdownTimerState extends State<CountdownTimer> {
     return Column(
       children: [
         Text('$value',
-            style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-        Text(unit, style: const TextStyle(fontSize: 16)),
+            style: const TextStyle(
+                fontSize: 40, fontFamily: 'JollySweater', color: Colors.white)),
+        Text(unit, style: const TextStyle(fontSize: 16, color: Colors.white)),
       ],
     );
   }

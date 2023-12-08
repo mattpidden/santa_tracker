@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:christmas/components/santas_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart' as map;
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:lottie/lottie.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
@@ -88,20 +89,22 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
 
   void checkStantaLocation() {
     Timer.periodic(const Duration(seconds: 10), (timer) {
-      setState(() {
-        if (mapController.camera.center != _santa) {
-          trackingOn = false;
-        }
-        _santa = SantaTracker().calculateSantaLocation();
-        _markers = SantaTracker().getAllMarkers();
-        currentStop = SantaTracker().getLocationNames().$1;
-        nextStop = SantaTracker().getLocationNames().$2;
-        presentsDelivered = SantaTracker().getLocationNames().$3;
+      if (mounted) {
+        setState(() {
+          if (mapController.camera.center != _santa) {
+            trackingOn = false;
+          }
+          _santa = SantaTracker().calculateSantaLocation();
+          _markers = SantaTracker().getAllMarkers();
+          currentStop = SantaTracker().getLocationNames().$1;
+          nextStop = SantaTracker().getLocationNames().$2;
+          presentsDelivered = SantaTracker().getLocationNames().$3;
 
-        if (trackingOn) {
-          mapController.move(_santa, mapController.camera.zoom);
-        }
-      });
+          if (trackingOn) {
+            mapController.move(_santa, mapController.camera.zoom);
+          }
+        });
+      }
     });
   }
 
@@ -131,28 +134,42 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
                     backgroundColor: Color.fromARGB(255, 172, 212, 220),
                     onTap: (tapPos, position) async {
                       // Reverse geocoding
-                      List<geocoding.Placemark> placemarks =
-                          await geocoding.placemarkFromCoordinates(
-                        position.latitude,
-                        position.longitude,
-                      );
-
-                      String locationInfo = "Unknown Location";
-
-                      if (placemarks.isNotEmpty) {
-                        locationInfo =
-                            "${placemarks.first.country}, ${placemarks.first.locality}";
-                      }
-
                       // Clear previous markers
                       tappedMarker.clear();
-
+                      var etaInfo = SantaTracker().getEtaOfLocation(position);
                       // Add a new marker with location info
                       tappedMarker.add(map.Marker(
+                        width: 180,
+                        height: 150,
                         point: position,
-                        child: Container(
-                          color: Colors.white,
-                          child: Text(locationInfo),
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5.0),
+                                border: Border.all(
+                                  color: Colors.red,
+                                  width: 1.0,
+                                ),
+                              ),
+                              alignment: Alignment.center,
+                              //color: Colors.white,
+                              child: Text(
+                                etaInfo,
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                softWrap: true,
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            Lottie.asset(
+                              'assets/snowman.json',
+                              width: 75,
+                              height: 75,
+                              fit: BoxFit.cover,
+                            ),
+                          ],
                         ),
                       ));
 
@@ -191,7 +208,8 @@ class AnimatedMapControllerPageState extends State<AnimatedMapControllerPage>
                             fontSize: 14,
                             backgroundColor:
                                 Color.fromARGB(255, 247, 247, 247))),
-                    Text("Presents Delivered: ${presentsDelivered * 1420357}",
+                    Text(
+                        "Presents Delivered: ${NumberFormat('#,##0').format(presentsDelivered * 1420357)}",
                         style: const TextStyle(
                             fontSize: 14,
                             backgroundColor:

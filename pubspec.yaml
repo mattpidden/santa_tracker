@@ -60,5 +60,13 @@ flutter:
     - assets/tree.json
     - assets/santasleigh.json
     - assets/present.json
+  fonts:
+    - family: JollySweater
+      fonts:
+        - asset: fonts/JollySweater-Regular.ttf
+    - family: SnowCapped
+      fonts:
+        - asset:  fonts/PWHappyChristmas.ttf
+
 
   

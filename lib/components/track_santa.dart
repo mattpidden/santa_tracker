@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:christmas/components/alert.dart';
+import 'package:christmas/components/countdown.dart';
 import 'package:christmas/components/map.dart';
+import 'package:christmas/components/santas_location.dart';
 import 'package:christmas/components/snowfall.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +15,8 @@ class TrackSantaMap extends StatefulWidget {
 }
 
 class _TrackSantaMapState extends State<TrackSantaMap> {
+  var santaLeft = SantaTracker().hasSantaLeft();
+  var showMap = SantaTracker().hasSantaLeft();
   Future<void> _showMyDialog(String title, String message) async {
     return showDialog<void>(
       context: context,
@@ -18,6 +24,31 @@ class _TrackSantaMapState extends State<TrackSantaMap> {
         return CustomAlert(title: title, message: message);
       },
     );
+  }
+
+  void handleCallback() {
+    setState(() {
+      showMap = true;
+    });
+  }
+
+  void checkSantaLeft() {
+    Timer.periodic(const Duration(seconds: 10), (timer) {
+      setState(() {
+        santaLeft = SantaTracker().hasSantaLeft();
+        if (santaLeft) {
+          showMap = true;
+        }
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Call the repeatFunction when the page opens
+    checkSantaLeft();
   }
 
   @override
@@ -33,10 +64,12 @@ class _TrackSantaMapState extends State<TrackSantaMap> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    //Show a back button if santa has not left but user is viewing map
                     SizedBox(
                       width: 50,
-                      height: 25,
                     ),
+                    Spacer(),
+
                     Text(
                       "Live Santa Tracker",
                       style: TextStyle(
@@ -44,6 +77,8 @@ class _TrackSantaMapState extends State<TrackSantaMap> {
                           fontWeight: FontWeight.bold,
                           fontSize: 24),
                     ),
+                    Spacer(),
+
                     SizedBox(
                       width: 50,
                       height: 25,
@@ -74,10 +109,21 @@ Merry Christmas! 🎄🎉
                     ),
                   ],
                 ),
-                Expanded(child: AnimatedMapControllerPage())
+                Expanded(
+                  child: AnimatedMapControllerPage(),
+                )
               ],
             )),
       ),
+      !showMap
+          ? Container(
+              color:
+                  Color.fromARGB(122, 172, 212, 220), // Set your desired color
+              width: double.infinity, // Set width to fill the available space
+              height: double.infinity, // Set height to fill the available space
+            )
+          : SizedBox.shrink(),
+      !showMap ? CountdownTimer(callback: handleCallback) : SizedBox.shrink(),
       const Snowfall()
     ]);
   }

@@ -39,7 +39,6 @@ class _HomePageStateView extends State<HomePage> {
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white),
                           ),
-                          const Expanded(child: CountdownTimer()),
                           const SizedBox(height: 10),
                           Expanded(
                               child: Container(
@@ -79,7 +78,6 @@ class _HomePageStateView extends State<HomePage> {
                           const SizedBox(height: 10),
                           Expanded(child: JokeView()),
                           const SizedBox(height: 10),
-                          Expanded(child: CountdownTimer()),
                         ]
                       : [
                           const Text(
@@ -92,7 +90,6 @@ class _HomePageStateView extends State<HomePage> {
                           Expanded(
                             child: Row(
                               children: [
-                                Expanded(child: CountdownTimer()),
                                 const SizedBox(width: 10),
                                 Expanded(
                                     child: Container(
@@ -141,7 +138,6 @@ class _HomePageStateView extends State<HomePage> {
                               children: [
                                 Expanded(child: JokeView()),
                                 const SizedBox(width: 10),
-                                Expanded(child: CountdownTimer()),
                               ],
                             ),
                           )
