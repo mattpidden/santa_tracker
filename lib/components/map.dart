@@ -5,7 +5,6 @@ import 'package:flutter_map/flutter_map.dart' as map;
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:lottie/lottie.dart';
-import 'package:geocoding/geocoding.dart' as geocoding;
 
 class AnimatedMapControllerPage extends StatefulWidget {
   static const String route = '/map_controller_animated';
