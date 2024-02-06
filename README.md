@@ -1,16 +1,8 @@
-# christmas
+# Flutter Santa Tracker
 
-A new Flutter project.
+I developed this project over a weekend in December 2023, when I wanted to do somthing festive. Over the Christmas holidays it was downloaded over 10,000 times.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Website:
+https://mattpidden.github.io/santa_tracker/
+- App Store:
+https://apps.apple.com/us/app/live-santa-tracker/id6473787738
